@@ -1,0 +1,36 @@
+.ImageGallery {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: -15px;
+}
+.ImageGalleryItem {
+  margin: 15px;
+  max-width: calc(((100%-30px) - 8 * 15px) / 4);
+}
+.ImageGalleryItem-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: top;
+}
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.Modal {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 600px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background-color: aqua;
+}

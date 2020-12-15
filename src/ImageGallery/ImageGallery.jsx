@@ -4,8 +4,7 @@ export default function ImageGallery({gallery}) {
     return (
         <ul className="ImageGallery">
             {gallery.map(obj => {
-                // console.log(obj.webformatURL);
-                return (<ImageGalleryItem urlImage={obj.webformatURL} altImage={obj.tags} key={obj.id}/>);
+                return (<ImageGalleryItem urlImage={obj.webformatURL} altImage={obj.tags} urlLargeImage={obj.largeImageURL} key={obj.id}/>);
             })}
         </ul>
     )

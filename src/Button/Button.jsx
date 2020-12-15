@@ -9,7 +9,7 @@ class Button extends Component {
         this.props.onSubPageNum(this.state.page);
     }
     render() {
-        return(<button onClick={this.onLoadMore}>Load more</button>)
+        return(<button type="button" onClick={this.onLoadMore}>Load more</button>)
     }
 }
 export default Button;
