@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BiSearch } from "react-icons/bi";
-import styles from './Searchbar.module.scss';
 
 class Searchbar extends Component{
     state={
@@ -17,8 +16,8 @@ class Searchbar extends Component{
     }
     render() {
         return(<header className="Searchbar">
-  <form className={styles.SearchForm} onSubmit={this.onSubmitSearchForm}>
-    <button type="submit" className={styles.SearchFormButton}>
+  <form className="SearchForm" onSubmit={this.onSubmitSearchForm}>
+    <button type="submit" className="SearchForm-button">
       <span className="SearchForm-button-label"><BiSearch/></span>
     </button>
                 <input

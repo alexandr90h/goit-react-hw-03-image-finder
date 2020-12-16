@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 class ImageGalleryItem extends Component{
-  onSubIdImg = e => {
+  onClickImg = e => {
     // console.log(e.currentTarget.dataset.url);
     this.props.onSubUrl(e.currentTarget.dataset.url)
   }

@@ -1,10 +1,14 @@
 import { Component } from "react";
 
 class Modal extends Component{
+    onClose = () => {
+        this.props.onCloseHend()
+    }
     render() {
-        return (<div className="Overlay">
+        return (<div className="Overlay" onClick={this.onClose}>
             <div className="Modal">
-                <img src="" alt="" />
+                {this.props.children}
+                <img src={this.props.imgUrl} alt=""/>
             </div>
         </div>)
     }

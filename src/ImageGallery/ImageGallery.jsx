@@ -1,11 +1,17 @@
+import { Component } from "react";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
-export default function ImageGallery({gallery}) {
-    return (
-        <ul className="ImageGallery">
-            {gallery.map(obj => {
-                return (<ImageGalleryItem urlImage={obj.webformatURL} altImage={obj.tags} urlLargeImage={obj.largeImageURL} key={obj.id}/>);
-            })}
-        </ul>
-    )
+class ImageGallery extends Component{
+    onSubUrlHend = data => {
+    this.props.onSubUrlHends(data);
 }
+    render() {
+        return (
+            <ul className="ImageGallery" >
+                {this.props.gallery.map(obj => {
+                    return (<ImageGalleryItem onSubUrl={this.onSubUrlHend} urlImage={obj.webformatURL} altImage={obj.tags} urlLargeImage={obj.largeImageURL} key={obj.id} />);
+                })}
+            </ul>)
+    }
+}
+export default ImageGallery;
