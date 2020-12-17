@@ -33,10 +33,8 @@ class App extends Component{
     this.setState({ page: data,newPageCords: cords })
   }
   onSubIdHendApp = data => {
-    this.toggleLoader();
         this.toggleModal();
     this.setState({ imgIdModal: data });
-        this.toggleLoader();
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.keyWord !== this.state.keyWord || prevState.page !== this.state.page) {
