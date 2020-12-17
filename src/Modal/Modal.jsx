@@ -1,18 +1,19 @@
 import { Component } from "react";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import PropTypes from 'prop-types';
+
 
 class Modal extends Component{
     state = {
-        id: '434918',
-            key: '18956584-3ac01e2418e4c39c7eb5dacd9',
+        key: '18956584-3ac01e2418e4c39c7eb5dacd9',
         imgUrl:'',
         visible:true,
     }
-     componentDidMount() {
+    componentDidMount() {
          window.addEventListener('keydown', this.handlerKeyDown);
-         fetch(`https://pixabay.com/api/?id=${this.state.id}&key=${this.state.key}`)
-            .then(res => res.json()).then(console.log);
+         fetch(`https://pixabay.com/api/?id=${this.props.imgId}&key=${this.state.key}`)
+            .then(res => res.json()).then(({hits})=>{this.setState({imgUrl:hits[0].largeImageURL})}).finally(()=>this.setState({visible:false}));
   }
     componentDidUpdate() { 
         
@@ -40,9 +41,14 @@ class Modal extends Component{
         height={100}
                     width={100}
       />}
-                <img src={this.props.imgUrl} alt=""/>
+                <img src={this.state.imgUrl} alt=""/>
             </div>
         </div>)
     }
 }
+Modal.propTypes = {
+  imgUrl: PropTypes.string,
+  imgId: PropTypes.string,
+}
+
 export default Modal;

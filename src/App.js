@@ -16,7 +16,8 @@ class App extends Component{
     loader: false,
     showModal: false,
     buttonVisible: false,
-    imgUrlModal: '',
+    imgIdModal: '',
+    newPageCords: 0,
   }
   toggleLoader = () => {
     this.setState(prev => ({ loader: !prev.loader }));
@@ -28,12 +29,13 @@ class App extends Component{
     this.setState({ keyWord: data, page:1, images:[] })
   }
   onSubPageNumApp = data => {
-    this.setState({ page: data })
+        const cords = document.documentElement.scrollHeight - 170;
+    this.setState({ page: data,newPageCords: cords })
   }
-  onSubUrlHendApp = data => {
+  onSubIdHendApp = data => {
     this.toggleLoader();
         this.toggleModal();
-    this.setState({ imgUrlModal: data });
+    this.setState({ imgIdModal: data });
         this.toggleLoader();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -41,26 +43,32 @@ class App extends Component{
       this.toggleLoader();
       fetch(`https://pixabay.com/api/?q=${this.state.keyWord}&page=${this.state.page}&key=${this.state.key}&image_type=photo&orientation=horizontal&per_page=12`)
         .then(res => res.json()).then(({ hits }) => { this.setState(prev => ({ images: prev.images.concat(hits) }));if (this.state.images.length!==0){this.setState({buttonVisible:true})}
-}).finally(()=>this.toggleLoader());
+        }).finally(() => this.toggleLoader());
     }
-
+        this.scrollToNextPage();
   }
+  scrollToNextPage = () => {
+    const { newPageCords } = this.state;
+    window.scrollTo({
+      top: newPageCords,
+      behavior: 'smooth',
+    });
+  };
   render() {
     return (<div className="main-conteiner">
       <Searchbar onSubHand={this.onSubHandApp} />
-      <ImageGallery gallery={this.state.images} onSubUrlHends={ this.onSubUrlHendApp}/>
+      <ImageGallery gallery={this.state.images} onSubIdHends={ this.onSubIdHendApp}/>
       {this.state.loader && <Loader
         type="ThreeDots"
         color="#00BFFF"
         height={100}
         width={100}
-        // timeout={3000} //3 secs
       />}
       {this.state.buttonVisible && <Button onSubPageNum={this.onSubPageNumApp} />}
       {this.state.showModal &&
         <Modal
         onCloseHend={this.toggleModal}
-        imgUrl={this.state.imgUrlModal}/>}
+        imgId={this.state.imgIdModal}/>}
     </div>
     );
 }
