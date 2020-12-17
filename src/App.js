@@ -6,6 +6,7 @@ import Searchbar from './Searchbar/Searchbar.jsx';
 import ImageGallery from './ImageGallery/ImageGallery.jsx';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
+
 class App extends Component{
   state = {
     keyWord: '',
@@ -14,6 +15,7 @@ class App extends Component{
     images: [],
     loader: false,
     showModal: false,
+    buttonVisible: false,
     imgUrlModal: '',
   }
   toggleLoader = () => {
@@ -38,11 +40,13 @@ class App extends Component{
     if (prevState.keyWord !== this.state.keyWord || prevState.page !== this.state.page) {
       this.toggleLoader();
       fetch(`https://pixabay.com/api/?q=${this.state.keyWord}&page=${this.state.page}&key=${this.state.key}&image_type=photo&orientation=horizontal&per_page=12`)
-        .then(res => res.json()).then(({hits})=>this.setState(prev=>({images :prev.images.concat(hits)}))).finally(()=>this.toggleLoader());
+        .then(res => res.json()).then(({ hits }) => { this.setState(prev => ({ images: prev.images.concat(hits) }));if (this.state.images.length!==0){this.setState({buttonVisible:true})}
+}).finally(()=>this.toggleLoader());
     }
+
   }
   render() {
-    return (<div>
+    return (<div className="main-conteiner">
       <Searchbar onSubHand={this.onSubHandApp} />
       <ImageGallery gallery={this.state.images} onSubUrlHends={ this.onSubUrlHendApp}/>
       {this.state.loader && <Loader
@@ -52,18 +56,11 @@ class App extends Component{
         width={100}
         // timeout={3000} //3 secs
       />}
-      {this.state.images && <Button onSubPageNum={this.onSubPageNumApp} />}
+      {this.state.buttonVisible && <Button onSubPageNum={this.onSubPageNumApp} />}
       {this.state.showModal &&
         <Modal
         onCloseHend={this.toggleModal}
-        imgUrl={this.state.imgUrlModal}><Loader
-        type="ThreeDots"
-        color="#00BFFF"
-        height={100}
-          width={100}
-          visible={this.state.loader}
-        // timeout={3000} //3 secs
-      /></Modal>}
+        imgUrl={this.state.imgUrlModal}/>}
     </div>
     );
 }
